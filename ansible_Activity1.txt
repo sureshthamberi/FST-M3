@@ -1,0 +1,33 @@
+[vagrant@app1 ~]$ ansible-playbook Activity1.yml -K
+BECOME password: 
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [localhost] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Create a user on the sysytems] *******************************************
+[WARNING]: 'append' is set, but no 'groups' are specified. Use 'groups' for
+appending new groups.This will change to an error in Ansible 2.14.
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+[vagrant@app1 ~]$ cat Activity1.yml
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Create a user on the sysytems
+      user:
+        name: suresh
+        group: wheel
+        append: true
+[vagrant@app1 ~]$ 
+
+[vagrant@app1 ~]$ ls /home
+suresh  vagrant   
+[vagrant@app1 ~]$ 

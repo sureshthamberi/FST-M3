@@ -1,0 +1,114 @@
+[vagrant@app1 ~]$ rm -rf httpd
+[vagrant@app1 ~]$ 
+
+
+-------------------------------- or the other way to delete apache package installed alreday--------
+vim exmp_uninstallapache.yml
+
+
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: uninstall installed Apache package
+      dnf:
+        name: httpd
+        state: absent
+
+~
+
+
+
+[vagrant@app1 ~]$ ansible-playbook exmp_uninstallapache.yml -K
+BECOME password:
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [localhost] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [uninstall installed Apache package] **************************************
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[vagrant@app1 ~]$ 
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+===Activity2====
+
+vim Activity2.yml
+
+
+---
+- hosts: localhost
+  become: true
+  tasks:
+   # - name: upgrade all packages
+   #  dnf:
+   #    name: "*"
+   #    status: latest
+     - name: Install nginx and firewalld
+       dnf:
+         name:
+          - nginx
+          - firewalld
+         state: present
+       notify:
+          - start nginx
+          - start firewalld
+     - name: Open port 80 on the firewall
+       firewalld:
+          port: 80/tcp
+          state: enabled
+          permanent: true
+       notify: restart firewalld
+  handlers:
+    - name: start nginx
+      systemd:
+        name: nginxstate: started
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restared
+    - name: start firewalld
+      systemd:
+        name: firewalld
+        state: started
+    - name: restart firewalld
+      systemd:
+        name: firewalld
+        state: restarted
+
+
+
+
+[vagrant@app1 ~]$ ansible-playbook Activity2.yml -K
+BECOME password: 
+[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
+
+PLAY [localhost] *****************************************************************************************************************************
+TASK [Gathering Facts] ***********************************************************************************************************************ok: [localhost]
+
+TASK [Install nginx and firewalld] ***********************************************************************************************************changed: [localhost]
+
+TASK [Open port 80 on the firewall] **********************************************************************************************************changed: [localhost]
+
+RUNNING HANDLER [start nginx] ****************************************************************************************************************changed: [localhost]
+
+RUNNING HANDLER [start firewalld] ************************************************************************************************************ok: [localhost]
+
+RUNNING HANDLER [restart firewalld] **********************************************************************************************************changed: [localhost]
+
+PLAY RECAP ***********************************************************************************************************************************localhost                  : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+[vagrant@app1 ~]$ 
+
+[vagrant@app1 ~]$ exit
+logout
+Connection to 127.0.0.1 closed.
+PS C:\Users\04431J744\FST-M3-Sep22-02\Docker\M3 Project\training-environments-master-Ansible\Ansible> 
