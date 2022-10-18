@@ -1,0 +1,21 @@
+root@IBM-PF32PE4L:~/M3-Sep22-02# vim ADDAdditionalFiles.sh
+root@IBM-PF32PE4L:~/M3-Sep22-02# cat  ADDAdditionalFiles.sh
+#!/bin/bash
+touch song7.mp3
+touch snap7.jpg
+touch film7.mp4
+
+mkdir  Music
+mkdir  Pictures
+mkdir  Videos
+
+mv *.mp3 Music
+mv *.jpg Pictures
+mv *.mp4 Videos
+
+root@IBM-PF32PE4L:~/M3-Sep22-02# bash ADDAdditionalFiles.sh
+mkdir: cannot create directory ‘Music’: File exists
+mkdir: cannot create directory ‘Pictures’: File exists
+mkdir: cannot create directory ‘Videos’: File exists
+ADDAdditionalFiles.sh: line 13: $'\032\032': command not found
+root@IBM-PF32PE4L:~/M3-Sep22-02#

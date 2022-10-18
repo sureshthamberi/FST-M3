@@ -1,0 +1,36 @@
+root@IBM-PF32PE4L:~/M3-Sep22-02# cat filedistribution.sh
+#!/bin/bash
+touch song{1,2,3,4,5,6}.mp3
+touch snap{1,2,3,4,5,6}.jpg
+touch film{1,2,3,4,5,6}.mp4
+
+mkdir -p Music
+mkdir -p Pictures
+mkdir -p Videos
+
+mv *.mp3 Music/
+mv *.jpg Pictures/
+mv *.mp4 Videos/
+root@IBM-PF32PE4L:~/M3-Sep22-02# man mkdir
+root@IBM-PF32PE4L:~/M3-Sep22-02# bash filedistribution.sh
+root@IBM-PF32PE4L:~/M3-Sep22-02# dir
+Music  Pictures  Videos  file2.txt  filedistribution.sh
+root@IBM-PF32PE4L:~/M3-Sep22-02# ls -l
+total 16
+drwxr-xr-x 2 root root 4096 Sep 12 16:44 Music
+drwxr-xr-x 2 root root 4096 Sep 12 16:44 Pictures
+drwxr-xr-x 2 root root 4096 Sep 12 16:44 Videos
+-rw-r--r-- 1 root root    0 Sep  7 15:57 file2.txt
+-rw-r--r-- 1 root root  199 Sep 12 16:37 filedistribution.sh
+root@IBM-PF32PE4L:~/M3-Sep22-02# cd music
+-bash: cd: music: No such file or directory
+root@IBM-PF32PE4L:~/M3-Sep22-02# cd Music
+root@IBM-PF32PE4L:~/M3-Sep22-02/Music# ls -l
+total 0
+-rw-r--r-- 1 root root 0 Sep 12 16:44 song1.mp3
+-rw-r--r-- 1 root root 0 Sep 12 16:44 song2.mp3
+-rw-r--r-- 1 root root 0 Sep 12 16:44 song3.mp3
+-rw-r--r-- 1 root root 0 Sep 12 16:44 song4.mp3
+-rw-r--r-- 1 root root 0 Sep 12 16:44 song5.mp3
+-rw-r--r-- 1 root root 0 Sep 12 16:44 song6.mp3
+root@IBM-PF32PE4L:~/M3-Sep22-02/Music#
